@@ -35,7 +35,7 @@ This is a web tool that lets students upload or paste in a course syllabus and a
   Combines events across multiple uploaded syllabi into a single unified view, with smart prioritization (e.g., surfacing what's due soonest or weighted heaviest) rather than just a flat merged list.
 
 * **Feature 5: Calendar Export & Sync Integration**
-  * **Assigned Member:** Name
+  * **Assigned Member:** Junjie 
   * **Description:** Builds the Google Calendar API integration and/or ``.ics`` file export, plus optional reminder/notification settings (email or push) so events sync into whatever calendar system the student already uses.
 
 ## Getting Started

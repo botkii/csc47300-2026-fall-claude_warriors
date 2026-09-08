@@ -2,7 +2,7 @@
 Group for CSC47300
 
 # Project Name
-
+Syllabus-to-Calendar Parser
 ## Overview
 
 
@@ -14,17 +14,22 @@ Group for CSC47300
 ## Core Features & Team Assignments
 
 * **Feature 1: N/A**
-  * **Assigned Member:** Name
+  * **Assigned Member:** Kenneth Wong
   * **Description:** 
 
 * **Feature 2: N/A**
-  * **Assigned Member:** Name
+  * **Assigned Member:** Tony Christopher
   * **Description:** 
+
 * **Feature 3: N/A**
   * **Assigned Member:** Name
   * **Description:**  
 
 * **Feature 4: N/A**
+  * **Assigned Member:** Name
+  * **Description:** N/A
+
+* **Feature 5: N/A**
   * **Assigned Member:** Name
   * **Description:** N/A
 

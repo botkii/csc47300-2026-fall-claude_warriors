@@ -30,7 +30,7 @@ This is a web tool that lets students upload or paste in a course syllabus and a
   Builds the visual calendar/timeline UI where extracted events appear, and allows the student to manually edit, delete, or add events in case the parser misses or misreads something (important fallback for trust in the tool).
 
 * **Feature 4: Multi-Course Aggregation Dashboard**
-  * **Assigned Member:** Name
+  * **Assigned Member:** Diego Ordonez
   * **Description:** 
   Combines events across multiple uploaded syllabi into a single unified view, with smart prioritization (e.g., surfacing what's due soonest or weighted heaviest) rather than just a flat merged list.
 

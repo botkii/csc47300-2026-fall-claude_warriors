@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="A polished syllabus-to-calendar prototype for students." />
     <title>CourseFlow — Your semester, in focus.</title>
-    <link rel="stylesheet" href="styles.css" />
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+     <link rel="stylesheet" href="css/base.css" />
+     <link rel="stylesheet" href="css/calendar.css" />
+     <link rel="stylesheet" href="css/dashboard.css" />
+     <link rel="stylesheet" href="css/upload.css" />
   </head>
+  
   <body>
     <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
     <main class="app-shell">
@@ -18,7 +23,11 @@
 
       <section class="hero">
         <div><p class="eyebrow">YOUR ACADEMIC COMMAND CENTER</p><h1>Make every <em>deadline</em> count.</h1><p class="hero-copy">Your course schedule, arranged with clarity. Stay ahead of the work that matters.</p></div>
-        <button class="primary-button" id="add-event"><span>+</span> Add deadline</button>
+
+        <div class="hero-actions">
+          <button class="secondary-button" id="import-syllabus" type="button"><span>↑</span> Import syllabus</button>
+          <button class="primary-button" id="add-event"><span>+</span> Add deadline</button>
+        </div>
       </section>
 
       <section class="stats" aria-label="Semester summary">
@@ -45,6 +54,59 @@
     </main>
 
     <dialog id="event-dialog" aria-labelledby="dialog-title"><form id="event-form" method="dialog"><div class="dialog-header"><div><p class="eyebrow" id="dialog-kicker">NEW DEADLINE</p><h2 id="dialog-title">Add to your calendar</h2></div><button class="close-button" value="cancel" aria-label="Close">×</button></div><input type="hidden" id="event-id" /><label>Title<input id="event-title" required placeholder="e.g. Research proposal" /></label><div class="form-row"><label>Date<input id="event-date" type="date" required /></label><label>Time<input id="event-time" type="time" /></label></div><div class="form-row"><label>Type<select id="event-type"><option value="assignment">Assignment</option><option value="exam">Exam</option><option value="project">Project</option><option value="reading">Reading</option><option value="other">Other</option></select></label><label>Weight<input id="event-weight" type="text" placeholder="e.g. 20%" /></label></div><label>Course<input id="event-course" placeholder="e.g. CSC 47300" /></label><label>Notes<textarea id="event-description" rows="3" placeholder="Add a note for later..."></textarea></label><div class="dialog-actions"><button type="button" class="delete-button hidden" id="delete-event">Delete event</button><span></span><button type="button" class="text-button" id="cancel-event">Cancel</button><button class="primary-button" value="default">Save deadline</button></div></form></dialog>
-    <script src="script.js"></script>
+    <dialog id="import-dialog" aria-labelledby="import-title">
+      <div class="import-body">
+        <div class="dialog-header">
+          <div><p class="eyebrow">SYLLABUS IMPORT</p><h2 id="import-title">Turn a syllabus into deadlines</h2></div>
+          <button class="close-button" id="import-close" type="button" aria-label="Close">×</button>
+        </div>
+    
+        <ol class="import-steps" id="import-steps">
+          <li class="active">1 · Upload</li><li>2 · Reading</li><li>3 · Review</li>
+        </ol>
+    
+        <div class="import-pane" id="import-pane-upload">
+          <div class="dropzone" id="syllabus-dropzone" role="button" tabindex="0" aria-label="Upload a syllabus file">
+            <span class="dropzone-icon">↑</span>
+            <strong>Drop your syllabus here, or click to browse</strong>
+            <small>PDF, Word, text, or a photo of a printed page</small>
+          </div>
+          <input type="file" id="syllabus-file" class="hidden" accept=".pdf,.doc,.docx,.txt,.md,image/*" />
+          <div class="file-chip" id="syllabus-file-chip"></div>
+    
+          <div class="or-divider">OR PASTE THE TEXT</div>
+          <label for="syllabus-text" class="hidden">Syllabus text</label>
+          <textarea id="syllabus-text" placeholder="Paste the schedule or grading section of your syllabus..."></textarea>
+          <p class="import-hint">Tip: the weekly schedule section usually has the most dates.</p>
+        </div>
+    
+        <div class="import-pane hidden" id="import-pane-parsing" aria-live="polite">
+          <div class="parsing-state"><div class="spinner"></div><strong>Finding your deadlines…</strong><span>Looking for assignments, exams, readings, and projects.</span></div>
+        </div>
+    
+        <div class="import-pane hidden" id="import-pane-review">
+          <div class="import-meta">
+            <label>Course<input id="import-course" placeholder="e.g. CSC 47300" /></label>
+          </div>
+          <div class="review-toolbar">
+            <label><input type="checkbox" id="review-select-all" checked /> Select all</label>
+            <span class="review-count" id="review-count"></span>
+          </div>
+          <div class="review-list" id="review-list"></div>
+        </div>
+    
+        <div class="import-error" id="import-error" role="alert"></div>
+    
+        <div class="dialog-actions">
+          <button type="button" class="text-button hidden" id="import-back">← Back</button>
+          <span></span>
+          <button type="button" class="text-button" id="import-cancel">Cancel</button>
+          <button type="button" class="primary-button" id="import-parse">Find deadlines</button>
+          <button type="button" class="primary-button hidden" id="import-confirm">Add to calendar</button>
+        </div>
+      </div>
+    </dialog>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/upload.js"></script>
   </body>
 </html>

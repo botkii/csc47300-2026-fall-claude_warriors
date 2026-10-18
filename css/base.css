@@ -1,0 +1,297 @@
+body {
+	margin: 0;
+	font-family: Arial, sans-serif;
+	line-height: 1.5;
+	color: #3d1b1b;
+	background-color: #f7e9f8;
+}
+
+button,
+input,
+select,
+textarea {
+	font: inherit;
+}
+
+button {
+	padding: 0.6rem 1rem;
+	color: #ffffff;
+	background-color: #862a2a;
+	border: 0;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+button:hover,
+button:focus-visible {
+	background-color: #631d1d;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+	outline: 3px solid #e9bd69;
+	outline-offset: 2px;
+}
+
+.ambient {
+	display: none;
+}
+
+.app-shell {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 1rem 2rem;
+}
+
+.topbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin: 0 -1rem;
+	padding: 1.25rem 2rem;
+	color: #ffffff;
+	background-color: #865b2a;
+}
+
+.brand {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	color: #ffffff;
+	font-size: 1.25rem;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.brand > span:last-child > span {
+	color: #f2d99d;
+}
+
+.brand-mark {
+	display: inline-grid;
+	place-items: center;
+	width: 2rem;
+	height: 2rem;
+	border: 1px solid #ffffff;
+	border-radius: 50%;
+}
+
+.term-pill {
+	padding: 0.35rem 0.8rem;
+	color: #3d1b1b;
+	background-color: #f0e4d2;
+	border-radius: 1rem;
+	font-size: 0.85rem;
+}
+
+.pulse {
+	display: inline-block;
+	width: 0.55rem;
+	height: 0.55rem;
+	margin-right: 0.35rem;
+	background-color: #357a38;
+	border-radius: 50%;
+}
+
+.topbar-actions {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.icon-button,
+.profile,
+.round-button,
+.more-button,
+.close-button,
+.text-button {
+	color: #701f1f;
+	background-color: transparent;
+}
+
+.icon-button:hover,
+.profile:hover,
+.round-button:hover,
+.more-button:hover,
+.close-button:hover,
+.text-button:hover {
+	color: #ffffff;
+	background-color: #862a2a;
+}
+
+.profile {
+	width: 2.2rem;
+	height: 2.2rem;
+	padding: 0;
+	color: #3d1b1b;
+	background-color: #f0e4d2;
+	border-radius: 50%;
+	font-size: 0.75rem;
+	font-weight: bold;
+}
+
+.round-button {
+	padding: 0.35rem 0.65rem;
+	border: 1px solid #dfc3a9;
+}
+
+.primary-button {
+	white-space: nowrap;
+}
+
+.secondary-button {
+	color: #862a2a;
+	background-color: transparent;
+	border: 1px solid #862a2a;
+	white-space: nowrap;
+}
+
+.secondary-button:hover,
+.secondary-button:focus-visible {
+	color: #ffffff;
+	background-color: #862a2a;
+}
+
+.delete-button {
+	color: #862a2a;
+	background-color: transparent;
+	text-align: left;
+}
+
+.delete-button:hover {
+	color: #ffffff;
+	background-color: #862a2a;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+	display: flex;
+	align-items: end;
+	justify-content: space-between;
+	gap: 2rem;
+	padding: 2.5rem 0 1.5rem;
+}
+
+.hero-actions {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.hero h1 {
+	margin: 0;
+	color: #862a2a;
+	font-size: clamp(2.1rem, 5vw, 3.5rem);
+	line-height: 1.1;
+}
+
+.hero h1 em {
+	color: #865b2a;
+}
+
+.hero-copy {
+	max-width: 40rem;
+	margin: 0.75rem 0 0;
+	color: #654a4a;
+}
+
+.eyebrow {
+	margin: 0 0 0.35rem;
+	color: #865b2a;
+	font-size: 0.75rem;
+	font-weight: bold;
+	letter-spacing: 0.08rem;
+}
+
+.glass-panel {
+	padding: 1.25rem;
+	background-color: #ffffff;
+	border: 1px solid #e8d5bc;
+}
+
+.panel-header,
+.side-heading,
+.dialog-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.panel-header h2,
+.side-heading h2,
+.dialog-header h2 {
+	margin: 0;
+	color: #862a2a;
+}
+
+dialog {
+	width: min(32rem, calc(100% - 2rem));
+	padding: 0;
+	color: #3d1b1b;
+	background-color: #ffffff;
+	border: 1px solid #e8d5bc;
+}
+
+dialog::backdrop {
+	background-color: rgba(61, 27, 27, 0.45);
+}
+
+dialog form {
+	padding: 1.5rem;
+}
+
+label {
+	display: block;
+	margin-top: 1rem;
+	font-weight: bold;
+}
+
+input,
+select,
+textarea {
+	width: 100%;
+	max-width: 100%;
+	margin-top: 0.3rem;
+	padding: 0.5rem;
+	color: #3d1b1b;
+	background-color: #fffdf9;
+	border: 1px solid #c2b97b;
+	border-radius: 3px;
+}
+
+.form-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+}
+
+.dialog-actions {
+	display: grid;
+	grid-template-columns: 1fr auto auto;
+	gap: 0.5rem;
+	margin-top: 1.5rem;
+}
+
+.hidden {
+	display: none !important;
+}
+
+@media (max-width: 650px) {
+	.topbar,
+	.hero {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.hero-actions {
+		flex-wrap: wrap;
+	}
+
+	.form-row {
+		display: block;
+	}
+}

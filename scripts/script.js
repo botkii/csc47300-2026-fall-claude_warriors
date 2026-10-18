@@ -92,3 +92,12 @@ $("#delete-event").addEventListener("click", () => { const id = $("#event-id").v
 form.addEventListener("submit", (event) => { event.preventDefault(); if (!form.reportValidity()) return; const id = $("#event-id").value; const deadline = { id: id || `e${Date.now()}`, title: $("#event-title").value.trim(), date: $("#event-date").value, time: $("#event-time").value, type: $("#event-type").value, course: $("#event-course").value.trim(), weight: $("#event-weight").value.trim(), description: $("#event-description").value.trim() }; if (id) events = events.map((item) => item.id === id ? deadline : item); else events.push(deadline); currentDate = fromISO(deadline.date); currentDate.setDate(1); closeEditor(); render(); });
 document.querySelectorAll("[data-view]").forEach((button) => button.addEventListener("click", () => { document.querySelectorAll("[data-view]").forEach((tab) => { const selected = tab === button; tab.classList.toggle("active", selected); tab.setAttribute("aria-selected", String(selected)); }); const agenda = button.dataset.view === "agenda"; agendaView.classList.toggle("hidden", !agenda); calendarView.classList.toggle("hidden", agenda); }));
 render();
+
+window.CourseFlow = {
+  addEvents(newEvents) {
+    events.push(...newEvents);
+    const first = newEvents.map((e) => e.date).sort()[0];
+    if (first) { currentDate = fromISO(first); currentDate.setDate(1); }
+    render();
+  }
+};

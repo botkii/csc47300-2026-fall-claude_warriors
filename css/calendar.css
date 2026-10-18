@@ -1,0 +1,258 @@
+.workspace {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 18rem;
+	gap: 1.25rem;
+}
+
+.calendar-panel,
+.upcoming-panel,
+.legend {
+	margin-bottom: 1rem;
+}
+
+.calendar-controls,
+.view-toggle {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.view-toggle {
+	margin: 1.5rem 0 1rem;
+}
+
+.view-toggle button {
+	color: #701f1f;
+	background-color: #f0e4d2;
+}
+
+.view-toggle button.active {
+	color: #ffffff;
+	background-color: #862a2a;
+}
+
+.weekdays,
+.calendar-grid {
+	display: grid;
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.weekdays span {
+	padding: 0.5rem;
+	color: #862a2a;
+	font-size: 0.8rem;
+	font-weight: bold;
+	text-align: center;
+}
+
+.calendar-grid {
+	border-top: 1px solid #dfc3a9;
+	border-left: 1px solid #dfc3a9;
+}
+
+.day {
+	min-height: 7.5rem;
+	padding: 0.45rem;
+	border-right: 1px solid #dfc3a9;
+	border-bottom: 1px solid #dfc3a9;
+}
+
+.day:hover {
+	background-color: #fff8ef;
+}
+
+.day-number {
+	display: inline-grid;
+	place-items: center;
+	width: 1.7rem;
+	height: 1.7rem;
+	font-size: 0.8rem;
+	font-weight: bold;
+}
+
+.day.other-month .day-number {
+	color: #9b8484;
+}
+
+.day.today .day-number {
+	color: #ffffff;
+	background-color: #862a2a;
+	border-radius: 50%;
+}
+
+.event-chip {
+	display: block;
+	width: 100%;
+	margin-top: 0.3rem;
+	padding: 0.3rem;
+	overflow: hidden;
+	color: #3d1b1b;
+	background-color: #eee7ff;
+	border-left: 3px solid #7656a7;
+	border-radius: 0;
+	font-size: 0.72rem;
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.event-chip:hover {
+	color: #3d1b1b;
+	background-color: #ddd0fa;
+}
+
+.event-chip.exam {
+	background-color: #ffe4df;
+	border-color: #a84242;
+}
+
+.event-chip.project {
+	background-color: #dcefe9;
+	border-color: #357a68;
+}
+
+.event-chip.reading {
+	background-color: #fff2d8;
+	border-color: #b87916;
+}
+
+.agenda-group {
+	display: grid;
+	grid-template-columns: 7rem 1fr;
+	gap: 1rem;
+	padding: 1rem 0;
+	border-top: 1px solid #e8d5bc;
+}
+
+.agenda-date {
+	color: #865b2a;
+	font-size: 0.8rem;
+	font-weight: bold;
+}
+
+.agenda-item {
+	margin-bottom: 0.5rem;
+	padding: 0.75rem;
+	background-color: #eee7ff;
+	border-left: 4px solid #7656a7;
+	cursor: pointer;
+}
+
+.agenda-item.exam { border-color: #a84242; }
+.agenda-item.project { border-color: #357a68; }
+.agenda-item.reading { border-color: #b87916; }
+
+.agenda-item span {
+	color: #654a4a;
+	font-size: 0.8rem;
+}
+
+.upcoming-list {
+	margin-top: 1rem;
+}
+
+.upcoming-item {
+	display: grid;
+	grid-template-columns: 2.5rem 1fr;
+	gap: 0.6rem;
+	padding: 0.8rem 0;
+	border-top: 1px solid #e8d5bc;
+	cursor: pointer;
+}
+
+.upcoming-date {
+	color: #865b2a;
+	font-size: 0.75rem;
+	text-align: center;
+}
+
+.upcoming-date strong {
+	display: block;
+	color: #862a2a;
+	font-size: 1.2rem;
+}
+
+.upcoming-item h3 {
+	margin: 0;
+	font-size: 0.9rem;
+}
+
+.upcoming-item p {
+	margin: 0.2rem 0 0;
+	color: #654a4a;
+	font-size: 0.75rem;
+}
+
+.type-tag {
+	display: inline-block;
+	margin-top: 0.4rem;
+	padding: 0.15rem 0.35rem;
+	color: #701f1f;
+	background-color: #f0e4d2;
+	font-size: 0.65rem;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.legend div {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	font-size: 0.8rem;
+}
+
+.dot {
+	display: inline-block;
+	width: 0.65rem;
+	height: 0.65rem;
+	margin-top: 0.3rem;
+	border-radius: 50%;
+}
+
+.dot.assignment { background-color: #7656a7; }
+.dot.exam { background-color: #a84242; }
+.dot.project { background-color: #357a68; }
+.dot.reading { background-color: #b87916; }
+
+@media (max-width: 900px) {
+	.workspace {
+		grid-template-columns: 1fr;
+	}
+
+	.sidebar {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+	}
+
+	.legend {
+		grid-column: 1 / -1;
+	}
+}
+
+@media (max-width: 650px) {
+	.sidebar {
+		display: block;
+	}
+
+	.day {
+		min-height: 4.5rem;
+		padding: 0.2rem;
+	}
+
+	.event-chip {
+		height: 0.45rem;
+		padding: 0;
+		font-size: 0;
+	}
+
+	.weekdays span {
+		padding: 0.3rem 0.1rem;
+		font-size: 0.65rem;
+	}
+
+	.agenda-group {
+		grid-template-columns: 1fr;
+		gap: 0.35rem;
+	}
+}

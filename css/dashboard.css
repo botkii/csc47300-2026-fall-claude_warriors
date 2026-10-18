@@ -1,0 +1,85 @@
+.stats {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1rem;
+	margin-bottom: 1.25rem;
+}
+
+.stats article,
+.quote-card {
+	padding: 1.25rem;
+	background-color: #ffffff;
+	border: 1px solid #e8d5bc;
+}
+
+.stats article {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.stat-icon {
+	display: grid;
+	place-items: center;
+	width: 2.2rem;
+	height: 2.2rem;
+	border-radius: 50%;
+	font-weight: bold;
+}
+
+.violet {
+	color: #ffffff;
+	background-color: #7656a7;
+}
+
+.coral {
+	color: #ffffff;
+	background-color: #a84242;
+}
+
+.mint {
+	color: #ffffff;
+	background-color: #357a68;
+}
+
+.gold {
+	color: #3d1b1b;
+	background-color: #e9bd69;
+}
+
+.stats strong {
+	display: block;
+	font-size: 1.2rem;
+}
+
+.stats article div span {
+	color: #654a4a;
+	font-size: 0.8rem;
+}
+
+.quote-card {
+	margin-bottom: 1rem;
+	color: #ffffff;
+	background-color: #865b2a;
+}
+
+.quote-card > span {
+	font-size: 2.2rem;
+	line-height: 1;
+}
+
+.quote-card p {
+	margin: 0.4rem 0;
+	font-size: 1.1rem;
+	font-style: italic;
+}
+
+.quote-card small {
+	color: #f0e4d2;
+}
+
+@media (max-width: 650px) {
+	.stats {
+		grid-template-columns: 1fr 1fr;
+	}
+}

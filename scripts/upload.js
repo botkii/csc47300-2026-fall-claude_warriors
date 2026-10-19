@@ -193,5 +193,4 @@
 	$("#import-confirm").addEventListener("click", confirmImport);
 	$("#import-cancel").addEventListener("click", closeImport);
 	$("#import-close").addEventListener("click", closeImport);
-	$("#close-event").addEventListener("click", closeEditor);   // next to the cancel-event listener
 })();

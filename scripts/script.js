@@ -8,6 +8,9 @@ const dialog = $("#event-dialog");
 const form = $("#event-form");
 let currentDate = new Date();
 currentDate.setDate(1);
+// Set by other features (e.g. the dashboard's course filter) through window.CourseFlow.
+let eventFilter = () => true;
+const changeListeners = [];
 
 function toISO(date) {
   const offset = date.getTimezoneOffset() * 60000;
@@ -35,12 +38,23 @@ let events = [
   { id: "e4", title: "Portfolio case study", date: shiftDay(9), time: "23:59", type: "project", course: "CSC 47300", weight: "20%", description: "Publish the first complete case study." },
   { id: "e5", title: "Reading: Accessibility patterns", date: shiftDay(13), type: "reading", course: "CSC 47300", description: "Review WCAG patterns and take notes." },
   { id: "e6", title: "Data structures problem set", date: shiftDay(18), time: "23:59", type: "assignment", course: "CSC 21200", weight: "8%", description: "Submit through Blackboard." },
-  { id: "e7", title: "Final project milestone", date: shiftDay(26), time: "17:00", type: "project", course: "CSC 47300", weight: "30%", description: "Present the working alpha to the class." }
+  { id: "e7", title: "Final project milestone", date: shiftDay(26), time: "17:00", type: "project", course: "CSC 47300", weight: "30%", description: "Present the working alpha to the class." },
+  { id: "e8", title: "Linear algebra exam 2", date: shiftDay(6), time: "10:00", type: "exam", course: "MATH 34600", weight: "20%", description: "Eigenvalues, diagonalization, and inner products." },
+  { id: "e9", title: "Lab 5: Pipelining", date: shiftDay(2), time: "23:59", type: "assignment", course: "CSC 34200", weight: "5%", description: "Submit the timing diagrams." },
+  { id: "e10", title: "Problem set 6", date: shiftDay(11), time: "23:59", type: "assignment", course: "MATH 34600", weight: "6%" },
+  { id: "e11", title: "Cache simulator project", date: shiftDay(16), time: "23:59", type: "project", course: "CSC 34200", weight: "25%", description: "Direct-mapped and set-associative modes." },
+  { id: "e12", title: "Reading: Memory hierarchy", date: shiftDay(8), type: "reading", course: "CSC 34200", description: "Chapter 7." },
+  { id: "e13", title: "Algorithms homework 5", date: shiftDay(12), time: "23:59", type: "assignment", course: "CSC 31100", weight: "7%" },
+  { id: "e14", title: "Algorithms final exam", date: shiftDay(40), time: "09:00", type: "exam", course: "CSC 31100", weight: "35%" },
+  { id: "e15", title: "Algorithms homework 3", date: shiftDay(-10), time: "23:59", type: "assignment", course: "CSC 31100", weight: "7%" },
+  { id: "e16", title: "Linear algebra exam 1", date: shiftDay(-20), time: "10:00", type: "exam", course: "MATH 34600", weight: "20%" },
+  { id: "e17", title: "Usability study report", date: shiftDay(-7), time: "23:59", type: "project", course: "CSC 47300", weight: "15%" }
 ];
 
+function visibleEvents() { return events.filter((event) => eventFilter(event)); }
 function render() {
   renderCalendar(); renderAgenda(); renderUpcoming();
-  $("#total-count").textContent = String(events.filter((event) => event.date >= toISO(new Date())).length);
+  changeListeners.forEach((listener) => listener(events.slice()));
 }
 function renderCalendar() {
   const year = currentDate.getFullYear(), month = currentDate.getMonth();
@@ -50,7 +64,7 @@ function renderCalendar() {
   calendarGrid.innerHTML = "";
   for (let index = 0; index < 42; index += 1) {
     const date = new Date(start); date.setDate(start.getDate() + index);
-    const iso = toISO(date), dayEvents = events.filter((event) => event.date === iso).sort((a, b) => (a.time || "99:99").localeCompare(b.time || "99:99"));
+    const iso = toISO(date), dayEvents = visibleEvents().filter((event) => event.date === iso).sort((a, b) => (a.time || "99:99").localeCompare(b.time || "99:99"));
     const cell = document.createElement("div");
     cell.className = `day ${date.getMonth() !== month ? "other-month" : ""} ${iso === today ? "today" : ""}`;
     cell.innerHTML = `<span class="day-number">${date.getDate()}</span>`;
@@ -64,7 +78,7 @@ function renderCalendar() {
 }
 function renderAgenda() {
   const monthKey = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, "0")}`;
-  const monthly = events.filter((event) => event.date.startsWith(monthKey)).sort((a, b) => `${a.date}${a.time || ""}`.localeCompare(`${b.date}${b.time || ""}`));
+  const monthly = visibleEvents().filter((event) => event.date.startsWith(monthKey)).sort((a, b) => `${a.date}${a.time || ""}`.localeCompare(`${b.date}${b.time || ""}`));
   if (!monthly.length) { agendaView.innerHTML = '<p class="hero-copy">No deadlines this month. Take a breath, then add your next milestone.</p>'; return; }
   const groups = monthly.reduce((all, event) => { (all[event.date] ||= []).push(event); return all; }, {});
   agendaView.innerHTML = Object.entries(groups).map(([date, items]) => `<div class="agenda-group"><div class="agenda-date">${new Intl.DateTimeFormat("en-US", { weekday: "short", month: "short", day: "numeric" }).format(fromISO(date))}</div><div>${items.map((event) => `<div class="agenda-item ${event.type}" data-id="${event.id}"><strong>${escapeHTML(event.title)}</strong><span>${escapeHTML(event.time || "All day")} · ${escapeHTML(event.course || labelFor(event.type))}</span></div>`).join("")}</div></div>`).join("");
@@ -72,7 +86,7 @@ function renderAgenda() {
 }
 function renderUpcoming() {
   const today = toISO(new Date());
-  const next = events.filter((event) => event.date >= today).sort((a, b) => `${a.date}${a.time || ""}`.localeCompare(`${b.date}${b.time || ""}`)).slice(0, 4);
+  const next = visibleEvents().filter((event) => event.date >= today).sort((a, b) => `${a.date}${a.time || ""}`.localeCompare(`${b.date}${b.time || ""}`)).slice(0, 4);
   $("#upcoming-list").innerHTML = next.length ? next.map((event) => { const date = fromISO(event.date); return `<article class="upcoming-item" data-id="${event.id}"><div class="upcoming-date">${new Intl.DateTimeFormat("en-US", { month: "short" }).format(date)}<strong>${date.getDate()}</strong></div><div><h3>${escapeHTML(event.title)}</h3><p>${escapeHTML(event.course || "Personal schedule")} · ${escapeHTML(event.time || "All day")}</p><span class="type-tag">${labelFor(event.type)}</span></div></article>`; }).join("") : '<p class="hero-copy">Nothing is scheduled yet.</p>';
   $("#upcoming-list").querySelectorAll("[data-id]").forEach((item) => item.addEventListener("click", () => openEditor(events.find((event) => event.id === item.dataset.id))));
 }
@@ -99,5 +113,9 @@ window.CourseFlow = {
     const first = newEvents.map((e) => e.date).sort()[0];
     if (first) { currentDate = fromISO(first); currentDate.setDate(1); }
     render();
-  }
+  },
+  getEvents() { return events.slice(); },
+  onChange(listener) { changeListeners.push(listener); listener(events.slice()); },
+  setFilter(predicate) { eventFilter = predicate || (() => true); render(); },
+  openEvent(id) { const event = events.find((item) => item.id === id); if (event) openEditor(event); }
 };

@@ -32,9 +32,24 @@
 
       <section class="stats" aria-label="Semester summary">
         <article><span class="stat-icon violet">◈</span><div><strong id="total-count">0</strong><span>Upcoming deadlines</span></div></article>
-        <article><span class="stat-icon coral">↑</span><div><strong>3</strong><span>Due this week</span></div></article>
-        <article><span class="stat-icon mint">✓</span><div><strong>68%</strong><span>Semester complete</span></div></article>
-        <article><span class="stat-icon gold">◎</span><div><strong>4</strong><span>Active courses</span></div></article>
+        <article><span class="stat-icon coral">↑</span><div><strong id="week-count">0</strong><span>Due this week</span></div></article>
+        <article><span class="stat-icon mint">✓</span><div><strong id="semester-progress">0%</strong><span>Semester complete</span></div></article>
+        <article><span class="stat-icon gold">◎</span><div><strong id="course-count">0</strong><span>Active courses</span></div></article>
+      </section>
+
+      <div class="crunch-banner hidden" id="crunch-banner" role="status"></div>
+
+      <section class="insights" aria-label="Course insights">
+        <div class="glass-panel focus-panel">
+          <div class="side-heading"><div><p class="eyebrow">PRIORITIES</p><h2>Focus on this</h2></div></div>
+          <p class="panel-note">Ranked by grade weight, type, and how soon it's due.</p>
+          <ol class="focus-list" id="focus-list"></ol>
+        </div>
+        <div class="glass-panel courses-panel">
+          <div class="side-heading"><div><p class="eyebrow">YOUR COURSES</p><h2>Course overview</h2></div><button class="text-button hidden" id="show-all-courses" type="button">Show all</button></div>
+          <p class="panel-note">Click a course to show or hide it on the calendar.</p>
+          <div class="course-grid" id="course-grid"></div>
+        </div>
       </section>
 
       <section class="workspace">
@@ -108,5 +123,6 @@
     </dialog>
     <script src="scripts/script.js"></script>
     <script src="scripts/upload.js"></script>
+    <script src="scripts/dashboard.js"></script>
   </body>
 </html>

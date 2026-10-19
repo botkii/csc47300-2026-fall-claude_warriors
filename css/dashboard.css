@@ -78,6 +78,247 @@
 	color: #f0e4d2;
 }
 
+/* ---------- Crunch warning ---------- */
+.crunch-banner {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.75rem;
+	margin-bottom: 1.25rem;
+	padding: 1rem 1.25rem;
+	background-color: #fff2d8;
+	border: 1px solid #e9bd69;
+	border-left: 4px solid #b87916;
+}
+
+.crunch-banner strong {
+	display: block;
+	color: #701f1f;
+}
+
+.crunch-banner span:not(.crunch-icon),
+.crunch-banner small {
+	display: block;
+	margin-top: 0.2rem;
+	color: #654a4a;
+	font-size: 0.85rem;
+}
+
+.crunch-icon {
+	display: grid;
+	flex-shrink: 0;
+	place-items: center;
+	width: 1.8rem;
+	height: 1.8rem;
+	color: #ffffff;
+	background-color: #b87916;
+	border-radius: 50%;
+	font-weight: bold;
+}
+
+/* ---------- Insights (Focus + Courses) ---------- */
+.insights {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+	gap: 1.25rem;
+	margin-bottom: 1.25rem;
+}
+
+.panel-note {
+	margin: 0.35rem 0 1rem;
+	color: #654a4a;
+	font-size: 0.8rem;
+}
+
+.dashboard-empty {
+	padding: 1rem 0;
+	color: #654a4a;
+	font-size: 0.9rem;
+	list-style: none;
+}
+
+.focus-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.focus-item {
+	display: grid;
+	grid-template-columns: 1.8rem minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 0.75rem;
+	width: 100%;
+	padding: 0.75rem 0.25rem;
+	color: #3d1b1b;
+	background-color: transparent;
+	border-top: 1px solid #e8d5bc;
+	border-radius: 0;
+	text-align: left;
+}
+
+.focus-item:hover,
+.focus-item:focus-visible {
+	background-color: #fff8ef;
+}
+
+.focus-rank {
+	display: grid;
+	place-items: center;
+	width: 1.8rem;
+	height: 1.8rem;
+	color: #862a2a;
+	background-color: #f0e4d2;
+	border-radius: 50%;
+	font-size: 0.85rem;
+	font-weight: bold;
+}
+
+.focus-list li:first-child .focus-rank {
+	color: #ffffff;
+	background-color: #862a2a;
+}
+
+.focus-body strong {
+	display: block;
+	overflow: hidden;
+	font-size: 0.9rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.focus-meta {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	color: #654a4a;
+	font-size: 0.75rem;
+}
+
+.priority-bar {
+	display: block;
+	height: 0.3rem;
+	margin-top: 0.4rem;
+	background-color: #f0e4d2;
+	border-radius: 1rem;
+}
+
+.priority-bar span {
+	display: block;
+	height: 100%;
+	background-color: #862a2a;
+	border-radius: 1rem;
+}
+
+.focus-due {
+	color: #654a4a;
+	font-size: 0.75rem;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+.focus-due.urgent {
+	color: #a84242;
+}
+
+.course-dot {
+	display: inline-block;
+	flex-shrink: 0;
+	width: 0.65rem;
+	height: 0.65rem;
+	background-color: var(--course-color, #865b2a);
+	border-radius: 50%;
+}
+
+.course-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+	gap: 0.75rem;
+}
+
+.course-card {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+	padding: 0.85rem;
+	color: #3d1b1b;
+	background-color: #fffdf9;
+	border: 1px solid #e8d5bc;
+	border-top: 4px solid var(--course-color);
+	text-align: left;
+	transition: opacity 0.15s, transform 0.15s;
+}
+
+.course-card:hover,
+.course-card:focus-visible {
+	color: #3d1b1b;
+	background-color: #fff8ef;
+	transform: translateY(-2px);
+}
+
+.course-card.is-hidden {
+	opacity: 0.5;
+	border-top-color: #c9b8a6;
+}
+
+.course-card.is-hidden .course-dot {
+	background-color: #c9b8a6;
+}
+
+.course-card-top {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.course-card-top strong {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.course-toggle {
+	margin-left: auto;
+	padding: 0.1rem 0.35rem;
+	color: #701f1f;
+	background-color: #f0e4d2;
+	font-size: 0.65rem;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.course-next,
+.course-card small {
+	color: #654a4a;
+	font-size: 0.75rem;
+}
+
+.course-stats {
+	display: flex;
+	gap: 0.75rem;
+	font-size: 0.8rem;
+}
+
+.course-progress {
+	display: block;
+	height: 0.35rem;
+	background-color: #f0e4d2;
+	border-radius: 1rem;
+}
+
+.course-progress span {
+	display: block;
+	height: 100%;
+	background-color: var(--course-color);
+	border-radius: 1rem;
+}
+
+@media (max-width: 900px) {
+	.insights {
+		grid-template-columns: 1fr;
+	}
+}
+
 @media (max-width: 650px) {
 	.stats {
 		grid-template-columns: 1fr 1fr;

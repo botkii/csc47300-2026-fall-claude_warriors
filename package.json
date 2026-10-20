@@ -2,9 +2,14 @@
   "private": true,
   "scripts": {
     "dev": "vite",
+    "api": "node --env-file=.env server.cjs",
     "build": "vite build"
   },
   "devDependencies": {
     "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "mammoth": "^1.13.0",
+    "pdf-parse": "^1.1.4"
   }
 }

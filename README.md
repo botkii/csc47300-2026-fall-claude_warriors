@@ -39,6 +39,48 @@ This is a web tool that lets students upload or paste in a course syllabus and a
   * **Description:** Builds the Google Calendar API integration and/or ``.ics`` file export, plus optional reminder/notification settings (email or push) so events sync into whatever calendar system the student already uses.
 
 ## Getting Started
+
+### Requirements
+
+- Node.js and npm
+- A modern web browser
+
+### Run the local demo
+
 1. Clone the repository:
+
    ```bash
-   git clone N/A
+   git clone https://github.com/botkii/csc47300-2026-fall-claude_warriors.git
+   ```
+
+2. Move into the project folder:
+
+   ```bash
+   cd csc47300-2026-fall-claude_warriors
+   ```
+
+3. Install the project dependency:
+
+   ```bash
+   npm install
+   ```
+
+4. Start the Vite development server:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Open the local URL printed in the terminal, usually `http://localhost:5173`.
+
+The browser loads the TypeScript files in `scripts/` through Vite. The current demo uses local mock data, so no backend, database, API key, or environment file is needed.
+
+### Create a production build
+
+To check that the project builds successfully:
+
+```bash
+npm run build
+```
+
+Press `Ctrl+C` in the terminal to stop the development server.

@@ -8,6 +8,7 @@ import type { CalendarEvent } from "./script";
 
 	const TYPES: CalendarEvent["type"][] = ["assignment", "exam", "project", "reading", "other"];
 	const LOW_CONFIDENCE = 0.7;
+	const MAX_FILE_BYTES = 12 * 1024 * 1024;
 
 	const state = { file: null, items: [], course: "" };
 
@@ -34,22 +35,32 @@ import type { CalendarEvent } from "./script";
 	}
 	function labelFor(type) { return type.charAt(0).toUpperCase() + type.slice(1); }
 
-	/* ---------- Parser seam (replace this) ---------- */
-	function parseSyllabus({ text, file }) {
-		// TODO: real implementation (text extraction + deadline/object detection).
-		// Placeholder data so the review UI can be designed and tested.
-		return new Promise((resolve) => {
-			setTimeout(() => resolve({
-				course: "CSC 47300",
-				items: [
-					{ title: "Reading: Chapters 1–3", date: "2026-10-26", type: "reading", source: "Week 9: Read chapters 1–3 before Monday", confidence: 0.92 },
-					{ title: "Homework 4", date: "2026-10-30", time: "23:59", type: "assignment", weight: "8%", source: "HW4 due Fri Oct 30, 11:59 PM", confidence: 0.88 },
-					{ title: "Midterm exam", date: "2026-11-05", time: "10:00", type: "exam", weight: "25%", source: "Midterm — Nov 5 (25% of grade)", confidence: 0.95 },
-					{ title: "Group project proposal", date: "2026-11-13", type: "project", weight: "10%", source: "Proposal due mid-November", confidence: 0.55 },
-					{ title: "Final project presentation", date: "2026-12-08", time: "14:00", type: "project", weight: "30%", source: "Final presentations Dec 8", confidence: 0.81 }
-				]
-			}), 1400);
+	/* ---------- AI extraction ---------- */
+	async function parseSyllabus(text, file) {
+		let uploadedFile;
+		if (file && !text) {
+			const data = await new Promise((resolve, reject) => {
+				const reader = new FileReader();
+				reader.onerror = () => reject(new Error("The selected file could not be read."));
+				reader.onload = () => {
+					if (typeof reader.result !== "string") {
+						reject(new Error("The selected file could not be read."));
+						return;
+					}
+					resolve(reader.result);
+				};
+				reader.readAsDataURL(file);
+			});
+			uploadedFile = { name: file.name, data };
+		}
+		const response = await fetch("/api/extract", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ text, file: uploadedFile })
 		});
+		const result = await response.json();
+		if (!response.ok) throw new Error(result.error || "Syllabus extraction failed.");
+		return result;
 	}
 
 	/* ---------- Step handling ---------- */
@@ -95,12 +106,32 @@ import type { CalendarEvent } from "./script";
 
 	function setFile(file) {
 		if (!file) return;
+		const extension = file.name.toLowerCase().split(".").pop();
+		if (!["pdf", "docx", "txt", "md"].includes(extension)) {
+			state.file = null;
+			fileInput.value = "";
+			renderFileChip();
+			showError("Choose a PDF, Word (.docx), or text (.txt/.md) file. Legacy .doc files are not supported.");
+			return;
+		}
+		if (file.size > MAX_FILE_BYTES) {
+			state.file = null;
+			fileInput.value = "";
+			renderFileChip();
+			showError("Files must be smaller than 12 MB.");
+			return;
+		}
 		state.file = file; showError(""); renderFileChip();
-		// Plain text can be read in the browser right now; PDFs/DOCX/images need the real parser.
 		if (file.type === "text/plain" || /\.(txt|md)$/i.test(file.name)) {
 			const reader = new FileReader();
-			reader.onload = () => { textArea.value = String(reader.result || ""); };
+			reader.onload = () => {
+				textArea.value = String(reader.result || "");
+				showError("");
+			};
+			reader.onerror = () => showError("The selected text file could not be read.");
 			reader.readAsText(file);
+		} else {
+			textArea.value = "";
 		}
 	}
 
@@ -113,15 +144,19 @@ import type { CalendarEvent } from "./script";
 
 	async function startParse() {
 		const text = textArea.value.trim();
-		if (!text && !state.file) { showError("Upload a syllabus or paste its text to continue."); return; }
+		if (!text && !state.file) {
+			showError("Upload a syllabus file or paste its text to continue.");
+			return;
+		}
 		showError(""); showStep("parsing");
 		try {
-			const result = await parseSyllabus({ text, file: state.file });
+			const result = await parseSyllabus(text, state.file);
 			state.course = result.course || "";
 			state.items = (result.items || []).map((item, i) => ({ ...item, _id: `p${i}`, included: true }));
 			renderReview(); showStep("review");
 		} catch (error) {
-			showStep("upload"); showError("We couldn't read that syllabus. Try pasting the text instead.");
+			showStep("upload");
+			showError(error instanceof Error ? error.message : "Syllabus extraction failed. Please try again.");
 		}
 	}
 
@@ -180,7 +215,7 @@ import type { CalendarEvent } from "./script";
 			type: item.type,
 			course,
 			weight: item.weight || "",
-			description: item.description || ""
+			description: item.source || item.description || ""
 		}));
 		if (window.CourseFlow && typeof window.CourseFlow.addEvents === "function") window.CourseFlow.addEvents(events);
 		else console.warn("window.CourseFlow.addEvents is missing — see integration notes.");

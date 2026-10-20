@@ -1,4 +1,29 @@
 "use strict";
+export interface CalendarEvent {
+  id: string;
+  title: string;
+  date: string;
+  time?: string;
+  type: "assignment" | "exam" | "project" | "reading" | "other";
+  course?: string;
+  weight?: string;
+  description?: string;
+}
+
+interface CourseFlowAPI {
+  addEvents(newEvents: CalendarEvent[]): void;
+  getEvents(): CalendarEvent[];
+  onChange(listener: (events: CalendarEvent[]) => void): void;
+  setFilter(predicate: ((event: CalendarEvent) => boolean) | null): void;
+  openEvent(id: string): void;
+}
+
+declare global {
+  interface Window {
+    CourseFlow: CourseFlowAPI;
+  }
+}
+
 const $ = (selector) => document.querySelector(selector);
 const calendarGrid = $("#calendar-grid");
 const agendaView = $("#agenda-view");
@@ -9,8 +34,8 @@ const form = $("#event-form");
 let currentDate = new Date();
 currentDate.setDate(1);
 // Set by other features (e.g. the dashboard's course filter) through window.CourseFlow.
-let eventFilter = () => true;
-const changeListeners = [];
+let eventFilter: (event: CalendarEvent) => boolean = () => true;
+const changeListeners: Array<(events: CalendarEvent[]) => void> = [];
 
 function toISO(date) {
   const offset = date.getTimezoneOffset() * 60000;
@@ -31,7 +56,7 @@ function escapeHTML(value) {
 }
 function labelFor(type) { return type.charAt(0).toUpperCase() + type.slice(1); }
 
-let events = [
+let events: CalendarEvent[] = [
   { id: "e1", title: "Reading: Human-centered design", date: shiftDay(1), time: "09:00", type: "reading", course: "CSC 47300", description: "Read chapters 4–5 before studio." },
   { id: "e2", title: "Interface critique", date: shiftDay(3), time: "14:30", type: "assignment", course: "CSC 47300", weight: "10%", description: "Bring your latest responsive prototype." },
   { id: "e3", title: "Algorithms midterm", date: shiftDay(5), time: "10:00", type: "exam", course: "CSC 31100", weight: "25%", description: "Covers graphs, trees, and dynamic programming." },

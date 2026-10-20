@@ -1,17 +1,17 @@
 "use strict";
+import type { CalendarEvent } from "./script";
 
 /**
  * Feature 4 — Multi-Course Aggregation Dashboard.
- * Reads events through window.CourseFlow (scripts/script.js) and renders the
+ * Reads events through window.CourseFlow (scripts/script.ts) and renders the
  * summary stats, the priority-ranked Focus list, per-course cards (which double
  * as calendar filters), and the crunch-week warning.
  *
- * @typedef {{ id: string, title: string, date: string, time?: string, type: string, course?: string, weight?: string, description?: string }} CalendarEvent
  */
 (function () {
 	const $ = (selector) => document.querySelector(selector);
 	const app = window.CourseFlow;
-	if (!app || typeof app.onChange !== "function") { console.warn("Dashboard needs window.CourseFlow.onChange from scripts/script.js."); return; }
+	if (!app || typeof app.onChange !== "function") { console.warn("Dashboard needs window.CourseFlow.onChange from scripts/script.ts."); return; }
 
 	// Fall 2026 term window for "Semester complete". Replace with user settings later.
 	const TERM_START = "2026-08-26";
@@ -24,12 +24,9 @@
 	const PALETTE = ["#862a2a", "#357a68", "#7656a7", "#b87916", "#2f6690", "#a8507a", "#5c7a29", "#865b2a"];
 	const NO_COURSE = "Personal";
 
-	/** @type {Map<string, string>} */
-	const courseColors = new Map();
-	/** @type {Set<string>} */
-	const hiddenCourses = new Set();
-	/** @type {CalendarEvent[]} */
-	let events = [];
+	const courseColors = new Map<string, string>();
+	const hiddenCourses = new Set<string>();
+	let events: CalendarEvent[] = [];
 
 	/* ---------- Helpers ---------- */
 	function escapeHTML(value) {

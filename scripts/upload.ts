@@ -1,11 +1,12 @@
 "use strict";
+import type { CalendarEvent } from "./script";
 
 (function () {
 	const $ = (selector) => document.querySelector(selector);
 	const dialog = $("#import-dialog");
 	if (!dialog) return;
 
-	const TYPES = ["assignment", "exam", "project", "reading", "other"];
+	const TYPES: CalendarEvent["type"][] = ["assignment", "exam", "project", "reading", "other"];
 	const LOW_CONFIDENCE = 0.7;
 
 	const state = { file: null, items: [], course: "" };

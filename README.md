@@ -1,10 +1,7 @@
 # csc47300-2026-fall-claude_warriors
 Group for CSC47300
 
-# Project Name
-Syllabus-to-Calendar Parser
-## Overview
-This is a web tool that lets students upload or paste in a course syllabus and automatically extracts key dates — exams, assignment deadlines, readings, project milestones — and converts them into a clean, exportable calendar. Instead of manually transcribing every date from a dense, inconsistently formatted PDF (which most students either do sloppily or skip entirely), the tool does the heavy lifting in seconds.
+#Course Flow
 
 ## Tech Stack
 * **Frontend:** React, Tailwind

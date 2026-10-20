@@ -9,6 +9,82 @@
      <link rel="stylesheet" href="css/calendar.css" />
      <link rel="stylesheet" href="css/dashboard.css" />
      <link rel="stylesheet" href="css/upload.css" />
+      <style>
+      .calendar-sync-panel {
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 18px;
+        max-width: 420px;
+        font-family: system-ui, sans-serif;
+        color: #000000 !important; /* Black text */
+        box-shadow: 0 2px 8px rgba(0,0,0,.05);
+        margin: 20px auto;
+      }
+      .calendar-sync-panel h3 { 
+        margin: 0 0 14px; 
+        font-size: 17px; 
+        color: #000000 !important; 
+      }
+      .cs-row { 
+        display: flex; 
+        align-items: center; 
+        gap: 10px; 
+        margin-bottom: 10px; 
+        font-size: 14px; 
+        flex-wrap: wrap; 
+        color: #000000 !important;
+      }
+      .cs-row label { 
+        display: flex; 
+        align-items: center; 
+        gap: 6px; 
+        cursor: pointer; 
+        color: #000000 !important;
+      }
+      .cs-row select, .cs-row input[type="email"] { 
+        padding: 5px 8px; 
+        border: 1px solid #ccc; 
+        border-radius: 5px; 
+        font-size: 13px; 
+        flex: 1; 
+        min-width: 120px; 
+        color: #000000 !important; 
+        background: #ffffff !important; 
+      }
+      .cs-row input[type="email"]:disabled { 
+        background: #f5f5f5 !important; 
+        cursor: not-allowed; 
+        color: #888888 !important; 
+      }
+      .cs-actions { 
+        display: flex; 
+        gap: 8px; 
+        margin-top: 14px; 
+        flex-wrap: wrap; 
+      }
+      .cs-actions button { 
+        padding: 8px 14px; 
+        border: 1px solid #ccc; 
+        background: #f9f9f9; 
+        border-radius: 6px; 
+        cursor: pointer; 
+        font-size: 13px; 
+        font-weight: 500; 
+        transition: background .15s; 
+        font-family: inherit; 
+        color: #000000 !important; 
+      }
+      .cs-actions button:hover { 
+        background: #eee; 
+      }
+      .cs-status { 
+        font-size: 12px; 
+        color: #000000 !important; 
+        margin: 12px 0 0; 
+        line-height: 1.5; 
+      }
+    </style>
   </head>
   
   <body>
@@ -66,6 +142,7 @@
         </aside>
       </section>
     </main>
+    <div id="calendar-sync-container" style="padding: 20px;"></div>
 
     <dialog id="event-dialog" aria-labelledby="dialog-title"><form id="event-form" method="dialog"><div class="dialog-header"><div><p class="eyebrow" id="dialog-kicker">NEW DEADLINE</p><h2 id="dialog-title">Add to your calendar</h2></div><button class="close-button" value="cancel" aria-label="Close">×</button></div><input type="hidden" id="event-id" /><label>Title<input id="event-title" required placeholder="e.g. Research proposal" /></label><div class="form-row"><label>Date<input id="event-date" type="date" required /></label><label>Time<input id="event-time" type="time" /></label></div><div class="form-row"><label>Type<select id="event-type"><option value="assignment">Assignment</option><option value="exam">Exam</option><option value="project">Project</option><option value="reading">Reading</option><option value="other">Other</option></select></label><label>Weight<input id="event-weight" type="text" placeholder="e.g. 20%" /></label></div><label>Course<input id="event-course" placeholder="e.g. CSC 47300" /></label><label>Notes<textarea id="event-description" rows="3" placeholder="Add a note for later..."></textarea></label><div class="dialog-actions"><button type="button" class="delete-button hidden" id="delete-event">Delete event</button><span></span><button type="button" class="text-button" id="cancel-event">Cancel</button><button class="primary-button" value="default">Save deadline</button></div></form></dialog>
     <dialog id="import-dialog" aria-labelledby="import-title">
@@ -123,5 +200,34 @@
     <script type="module" src="/scripts/script.ts"></script>
     <script type="module" src="/scripts/upload.ts"></script>
     <script type="module" src="/scripts/dashboard.ts"></script>
+        <script type="module">
+      import { mountCalendarSync } from './scripts/calendar-sync/index.ts';
+
+      document.addEventListener('DOMContentLoaded', () => {
+        // Replace this with your real events later if needed
+        const myEvents = [
+          {
+            id: '1',
+            title: 'CS 310 — Midterm Review',
+            start: '2026-10-21T14:00',
+            end: '2026-10-21T15:30',
+            location: 'Library, Room 204',
+            notes: 'Bring practice problems.',
+          },
+          {
+            id: '2',
+            title: 'Study Group: Organic Chemistry',
+            start: '2026-10-23T18:00',
+            end: '2026-10-23T19:30',
+            location: 'Student Union',
+          },
+        ];
+
+        const container = document.getElementById('calendar-sync-container');
+        if (container) {
+          mountCalendarSync(container, myEvents);
+        }
+      });
+    </script>
   </body>
 </html>

@@ -1,0 +1,20 @@
+.calendar-sync-panel {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 18px;
+  max-width: 420px;
+  font-family: system-ui, sans-serif;
+  color: #000000 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  margin: 20px auto;
+}
+.calendar-sync-panel h3 { margin: 0 0 14px; font-size: 17px; color: #000000 !important; }
+.cs-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 14px; flex-wrap: wrap; color: #000000 !important; }
+.cs-row label { display: flex; align-items: center; gap: 6px; cursor: pointer; color: #000000 !important; }
+.cs-row select, .cs-row input[type="email"] { padding: 5px 8px; border: 1px solid #ccc; border-radius: 5px; font-size: 13px; flex: 1; min-width: 120px; color: #000000 !important; background: #ffffff !important; }
+.cs-row input[type="email"]:disabled { background: #f5f5f5 !important; cursor: not-allowed; color: #888888 !important; }
+.cs-actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.cs-actions button { padding: 8px 14px; border: 1px solid #ccc; background: #f9f9f9; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; transition: background .15s; font-family: inherit; color: #000000 !important; }
+.cs-actions button:hover { background: #eee; }
+.cs-status { font-size: 12px; color: #000000 !important; margin: 12px 0 0; line-height: 1.5; }

@@ -9,6 +9,7 @@
      <link rel="stylesheet" href="css/calendar.css" />
      <link rel="stylesheet" href="css/dashboard.css" />
      <link rel="stylesheet" href="css/upload.css" />
+     <link rel="stylesheet" href="css/calendar-sync.css" />
   </head>
   
   <body>
@@ -60,9 +61,18 @@
         </div>
 
         <aside class="sidebar">
-          <section class="glass-panel upcoming-panel"><div class="side-heading"><div><p class="eyebrow">COMING UP</p><h2>Next in line</h2></div><button class="more-button" aria-label="More upcoming events">•••</button></div><div id="upcoming-list" class="upcoming-list"></div></section>
+          <section class="glass-panel upcoming-panel">
+            <div class="side-heading"><div><p class="eyebrow">COMING UP</p><h2>Next in line</h2></div><button class="more-button" aria-label="More upcoming events">•••</button></div>
+            <div id="upcoming-list" class="upcoming-list"></div>
+          </section>
+          
           <section class="quote-card"><span>“</span><p>Success is the sum of small efforts, repeated day in and day out.</p><small>— Robert Collier</small></section>
-          <section class="glass-panel legend"><p class="eyebrow">EVENT TYPES</p><div><span class="dot assignment"></span>Assignment <span class="dot exam"></span>Exam <span class="dot project"></span>Project <span class="dot reading"></span>Reading</div></section>
+          
+          <section class="glass-panel legend">
+            <p class="eyebrow">EVENT TYPES</p>
+            <div><span class="dot assignment"></span>Assignment <span class="dot exam"></span>Exam <span class="dot project"></span>Project <span class="dot reading"></span>Reading</div>
+          </section>
+          <div id="calendar-sync-container" style="margin-top: 20px;"></div>
         </aside>
       </section>
     </main>
@@ -123,5 +133,6 @@
     <script type="module" src="/scripts/script.ts"></script>
     <script type="module" src="/scripts/upload.ts"></script>
     <script type="module" src="/scripts/dashboard.ts"></script>
+    <script type="module" src="/scripts/calendar-sync.ts"></script>
   </body>
 </html>

@@ -1,7 +1,7 @@
 # csc47300-2026-fall-claude_warriors
 Group for CSC47300
 
-#Course Flow
+# Course Flow
 
 ## Tech Stack
 * **Frontend:** React, Tailwind
